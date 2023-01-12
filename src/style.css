@@ -3,4 +3,46 @@
     padding: 0;
     box-sizing: border-box;
     font-family: sans-serif;
+    color: #293264;
+}
+
+body {
+    background-color: #F5F7FB;
+    padding: 100px;
+}
+
+.trivia {
+    margin: 10px auto;
+    width: 800px;
+}
+
+.questions {
+    margin-bottom: 30px;
+} 
+
+.answers {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-right: 20px;
+    border: 1px solid #293264;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+hr {
+    margin: 40px 0;
+    background-color: #D6DBF5;
+    border: none;
+    height: 2px;
+}
+
+.check-answers {
+    width: fit-content;
+    padding: 15px 20px;
+    background-color: #293264;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
 }
