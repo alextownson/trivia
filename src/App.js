@@ -90,7 +90,7 @@ export default function App() {
                 <div className='trivia'>
                     {questionElements}
                     <div className='end-buttons'>
-                        {check && <h3>You answered {score}/5 questions correctly!</h3>}
+                        {check && <h3>{score}/5 answers are correct!</h3>}
                         <button onClick={check ? newGame : checkAnswers} className='end-button'>{check ? 'Play again' : 'Check answers'}</button>
                     </div>
                 </div>
