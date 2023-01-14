@@ -78,6 +78,7 @@ export default function App() {
     function newGame() {
         setCount(prevCount => prevCount + 1)
         setCheck(false)
+        setScore(0)
     }
 
     function handleStartGame () {
