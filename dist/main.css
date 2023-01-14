@@ -40,7 +40,7 @@ h1 {
 .answers {
     display: inline-block;
     padding: 10px 20px;
-    margin: 30px 20px 30px 0;
+    margin: 30px 20px 0px 0;
     border: 1px solid #293264;
     border-radius: 10px;
     cursor: pointer;
@@ -53,7 +53,7 @@ h1 {
 
 hr {
     background-color: #D6DBF5;
-    margin-bottom: 30px;
+    margin: 30px 0;
     border: none;
     height: 2px;
 }
