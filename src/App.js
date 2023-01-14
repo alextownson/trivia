@@ -1,77 +1,102 @@
 import {React, useState, useEffect} from 'react'
+import {nanoid} from 'nanoid'
+import Questions from './components/Questions'
+import Start from './components/Start'
 
 export default function App() {
 
+    const [start, setStart] = useState(false)
     const [triviaData, setTriviaData] = useState([])
-    const [shuffledAnswers, setShuffledAnswers] = useState([])
-    const [selectedAnswers, setSelectedAnswers] = useState([
-        {answer: '',
-        isCorrect: false},
-        {answer: '',
-        isCorrect: false},
-        {answer: '',
-        isCorrect: false},
-        {answer: '',
-        isCorrect: false},
-        {answer: '',
-        isCorrect: false}
-    ])
+    const [count, setCount] = useState(0)
+    const [score, setScore] = useState(0)
+    const [check, setCheck] = useState(false)
+
+    const shuffle = (array) => array.sort(() => Math.random() - 0.5)
 
     useEffect(() => {
-        fetch('https://opentdb.com/api.php?amount=5&category=15&difficulty=easy&type=multiple')
-            .then(res => res.json())
-            .then(data => setTriviaData(data.results))
-    }, [])
-
-    useEffect(() => {
-        const shuffled = [...triviaData]
-        shuffled.map((data, index) => {
-            data.id = index
-            data.answers = [data.correct_answer, ...data.incorrect_answers]
-            data.answers.sort(() => Math.random() - 0.5)
+        async function getTriviaData() {
+            const res = await fetch('https://opentdb.com/api.php?amount=5&category=15&difficulty=easy&type=multiple')
+            const data = await res.json()
+            let tdb = []
+            data.results.forEach(question => {tdb.push({
+                id: nanoid(), 
+                question: question.question, 
+                correct: question.correct_answer, 
+                incorrect: [...question.incorrect_answers], 
+                answers: shuffle([question.correct_answer, ...question.incorrect_answers]),
+                selected: null,
+                response: false
+            })
         })
-        setShuffledAnswers(shuffled)
-    },[triviaData])
+            setTriviaData(tdb)
+        }
+        getTriviaData()
+    }, [count])
 
-    console.log(selectedAnswers)
+    const questionElements = triviaData.map(question => (
+        <Questions 
+            id={question.id}
+            key={question.id}
+            question={question}
+            handleClickAnswers={handleClickAnswers}
+            check={check}
+        />
+    ))
 
-    function select(index, answer) {
-        setSelectedAnswers(prevSelectedAnswers => {
-            const newArray = [...prevSelectedAnswers]
-            newArray[index].answer = answer
-            if (newArray[index].answer === shuffledAnswers[index].correct_answer)
-            {newArray[index].isCorrect = true}
-            else{newArray[index].isCorrect}
-            return newArray
-        })
+    function handleClickAnswers (id, answer) {
+        setTriviaData(prevTriviaData => prevTriviaData.map(question => {
+            let newTriviaData
+            if(question.id === id) {
+                newTriviaData = {...question, selected: answer}
+            } else {newTriviaData = {...question}}
+            return newTriviaData
+        }))
     }
 
     function checkAnswers() {
+        let selected = true
+        triviaData.forEach(question => {
+            if (question.selected === null) {
+                selected = false
+                return
+            }
+        })
+        if (!selected) {
+            return
+        }
+        setTriviaData(prevTriviaData => prevTriviaData.map(question => {
+            let newTriviaData
+            if (question.selected === question.correct) {
+                newTriviaData = {...question, response: true}
+                setScore(prevScore => prevScore + 1)
+            } else {newTriviaData = {...question}}
+            setCheck(true)
+            return newTriviaData
+        }))
+    }
 
-        
+    function newGame() {
+        setCount(prevCount => prevCount + 1)
+        setCheck(false)
+    }
+
+    function handleStartGame () {
+        setStart(true)
     }
 
     return(
-        <div className='trivia'>
-            {shuffledAnswers.map((question, index) => (
-                <div key={question.id}>
-                    <h2 className='questions'>{question.question.replace(/&quot;/g,'"').replace(/&#039;/g, "'").replace(/&eacute;/g, 'é')}</h2>
-                    {
-                        question.answers.map(((answer) => (
-                        <button 
-                            key={answer} 
-                            className='answers'
-                            onClick={() => select(index, answer)}
-                            style={{backgroundColor: answer === selectedAnswers[index].answer ? '#D6DBF5' : 'transparent'}}
-                        >{answer}</button>    
-                    )))}
-                    <hr></hr>
+        <>
+            {start ?
+                <div className='trivia'>
+                    {questionElements}
+                    <div className='end-buttons'>
+                        {check && <h3>You answered {score}/5 questions correctly!</h3>}
+                        <button onClick={check ? newGame : checkAnswers} className='end-button'>{check ? 'Play again' : 'Check answers'}</button>
+                    </div>
                 </div>
-            ))}
-            <button 
-                className='check-answers'
-                onClick={checkAnswers}
-            >Check answers</button>
-        </div>
-    )
+                :
+                <Start  handleStartGame={handleStartGame}/>
+            }
+        </>
+    )   
 }
