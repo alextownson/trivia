@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
-    "serve": "webpack serve"
+    "serve": "webpack serve",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",
@@ -17,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/alextownson/trivia/issues"
   },
-  "homepage": "https://github.com/alextownson/trivia#readme",
+  "homepage": "https://alextownson.github.io/trivia/",
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
@@ -29,6 +31,7 @@
     "babel-loader": "^9.1.2",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.7.3",
+    "gh-pages": "^5.0.0",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.7.2",
     "nanoid": "^4.0.0",
