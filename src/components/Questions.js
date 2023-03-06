@@ -8,7 +8,7 @@ export default function Questions(props) {
     }
 
     function cleanUp (data) {
-        const cleanData = data.replace(/&quot;/g,'"').replace(/&#039;/g, "'").replace(/&eacute;/g, 'é').replace(/&amp;/g, '&')
+        const cleanData = data.replace(/&quot;/g,'"').replace(/&#039;/g, "'").replace(/&eacute;/g, 'é').replace(/&amp;/g, '&').replace(/&iuml;/g, 'ï')
         return cleanData
     }
 
