@@ -1,0 +1,141 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    color: #293264;
+}
+
+body {
+    background-color: #F5F7FB;
+}
+
+.start-menu {
+    position: absolute;
+    left: 50%; 
+    top: 50%;
+    height: 100%;
+    width: 100%;
+    transform: translate(-50%, -50%);
+    background-image: url(assets/f2c1978246f5cfbdaee3.png);
+    background-size: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    font-size: 30pt;
+    margin-bottom: 50px;
+}
+
+.trivia {
+    margin: 50px auto;
+    padding: 0 20px;
+    max-width: 900px;
+    width: 100%;
+}
+
+.answers {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 30px 20px 0px 0;
+    border: 1px solid #293264;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.selected {
+    background-color: #DBDEF0;
+}
+
+hr {
+    background-color: #D6DBF5;
+    margin: 30px 0;
+    border: none;
+    height: 2px;
+}
+
+.end-button,
+.start-button {
+    width: fit-content;
+    padding: 15px 20px;
+    background-color: #293264;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.start-button {
+    font-size: 14pt;
+}
+
+#correct {
+    background-color: #94D7A2;
+}
+
+#incorrect {
+    background-color: #F8BCBC;
+}
+
+#not-selected  {
+    background-color: transparent;
+}
+
+.end-buttons {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-items: center;
+    padding-top: 20px;
+}
+
+@media only screen and (max-width: 900px) { 
+    .questions {
+        margin-bottom: 10px;
+    }
+
+    .answers {
+        margin: 10px 10px 10px 0;
+    }
+
+
+    hr {
+        margin: 20px 0;
+    }
+}
+
+
+@media only screen and (max-width: 600px) {
+
+    h1 {
+        font-size: 24pt;
+    }
+
+    h3 {
+        font-size: 12pt;
+    }
+
+    .start-button {
+        font-size: 12pt;
+    }
+
+    .questions {
+        font-size: 12pt;
+        margin-bottom: 10px;
+    }
+
+    .answers {
+        margin: 10px 10px 10px 0;
+    }
+
+    hr {
+        margin: 20px 0;
+    }
+}
+
+
+/*# sourceMappingURL=main.css.map*/
